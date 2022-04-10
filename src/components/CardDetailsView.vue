@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container >
     <v-row class="text-center">
         <v-card class="mx-auto my-12">    
           <v-data-table

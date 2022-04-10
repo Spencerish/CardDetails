@@ -3,8 +3,8 @@
     <v-row class="text-center">
         <v-card class="mx-auto my-12">    
         <v-data-table
-        :headers="headers"
-        :items="countryDetails"
+          :headers="headers"
+          :items="countryDetails"
         ></v-data-table>
         </v-card>  
     </v-row>
@@ -32,7 +32,7 @@ export default {
     createTableHeaders(){
       this.headers = [
         { text: 'Name', value: 'countryName'},
-        { text: 'Valid Status', value: 'validStatus'}]
+        { text: 'Valid Status', sortable:false, value: 'validStatus'}]
     }
   }
 }

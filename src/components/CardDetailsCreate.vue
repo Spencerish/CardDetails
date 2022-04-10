@@ -18,7 +18,6 @@
           >      
             <v-text-field
               v-model="cardNumber"
-              :counter="16"
               :rules="cardNumberRules"
               label="Card Number"
               required
@@ -51,6 +50,8 @@
                     prepend-icon="mdi-calendar"
                     width=200px           
                     v-on="on"
+                    :rules="expiryDateRules"
+                    required
                   ></v-text-field>
                 </v-col>
                 <v-col class="pa-2">
@@ -77,10 +78,11 @@
 
         <v-select
           v-model="selectedCountry"
-          :items="countries"
+          :items="allCountries"
           :rules="selectCountryRules"
           label="Country"
           required
+          dense
         ></v-select>
 
         <v-btn
@@ -115,22 +117,31 @@ export default {
       valid: true,
       datePickerMenuVisibility:false,
       cardNumber:null,
-      cardNumberRules: [v => /^\d+$/.test(v) || 'Please make sure the card number is valid', v => (v && v.length == 16) || 'The card number must be 16 digits',],
+      // Using a regex pattern to check for most common card types
+      cardNumberRules: [v => /^(?:4[0-9]{12}(?:[0-9]{3})?|[25][1-7][0-9]{14}|6(?:011|5[0-9][0-9])[0-9]{12}|3[47][0-9]{13}|3(?:0[0-5]|[68][0-9])[0-9]{11}|(?:2131|1800|35\d{3})\d{11})$/.test(v) || 'Please make sure the card number is valid'],
       cardHolder: '',
       cardHolderRules: [v => !!v || 'Card holder details are required',v => (v && v.length <= 12) || 'The name is too long'],
       cardCVV: '',
       cardCVVRules: [v => !!v || 'CVV is required', v => /^\d+$/.test(v) || 'CVV should be a number', v => (v && v.length == 4 || v && v.length == 3) || 'Please enter a valid CVV'],
       expiryDate:'',
+      expiryDateRules:  [v => !!v || 'Please enter an expiry date'],
       selectedCountry: null,
-      countries: ['South Africa', 'Namibia', 'Lesotho'],
       selectCountryRules: [v => !!v || 'A country is required']
+    }
+  },
+  props:{
+    allCountries:Array
+  },  
+  computed: {
+    countries(){
+      return this.allCountries
     }
   },
   methods: {
     submit() {
       if(!this.$refs.frmCardDetails.validate()) return;
       let capturedCardDetail={
-        cardNumber:this.cNumber,
+        cardNumber:this.cardNumber,
         cardHolder:this.cardHolder,
         cardCVV:this.cardCVV,
         expiryDate:this.expiryDate,

@@ -1,7 +1,7 @@
 <template>
-  <v-container>
+  <v-container fluid>
     <v-row class="text-center">
-      <v-card class="mx-auto my-12">
+      <v-card class="mx-auto my-12" min-width=350px>
         <v-card-title class="text-center">Ban Country</v-card-title>
         <v-divider class="mx-4"></v-divider>
         <v-card-text>
@@ -16,6 +16,7 @@
           :rules="selectCountryRules"
           label="Country"
           required
+          dense 
         ></v-select>
 
         <v-checkbox
@@ -49,10 +50,17 @@ name: 'CountryCreate',
       valid: true,
       validStatus:true,
       selectedCountry: null,
-      countries: ['South Africa', 'Namibia', 'Lesotho'],
       selectCountryRules: [v => !!v || 'A country is required'],
     }
   },
+  computed:{
+    countries(){
+      return this.allCountries
+    }
+  },
+  props:{
+    allCountries:Array
+  },  
   methods: {
     submit() {
       if(!this.$refs.frmCountryDetails.validate()) return;
