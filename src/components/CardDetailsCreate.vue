@@ -18,7 +18,7 @@
           >      
             <v-text-field
               :v-model="cardNumber"
-              :counter="10"
+              :counter="16"
               :rules="cardNumberRules"
               label="Card Number"
               required
@@ -108,28 +108,35 @@
 
 <script>
   export default {
-    name: 'HelloWorld',
-    data: () => ({
-      valid: true,
-      datePickerMenuVisibility:false,
-      cardNumber:1235467890,
-      cardNumberRules: [v => /^\d+$/.test(v) || 'Please make sure the card number is valid', v => (v && v.length <= 16) || 'The card number must be 16 digits',],
-      cardHolder: '',
-      cardHolderRules: [v => !!v || 'Card holder details are required',v => (v && v.length <= 12) || 'Please enter a valid name'],
-      cardCVV: '',
-      cardCVVRules: [v => (v && v.length <= 4) || 'Please enter a valid CVV'],
-      expiryDate:'',
-      selectedCountry: null,
-      countries: ['South Africa', 'Namibia', 'Lesotho'],
-      selectCountryRules: [v => !!v || 'A country is required'],
-    }),
+    name: 'CardDetailsCreate',
+    data() {
+        return {
+          on:false,
+          valid: true,
+          datePickerMenuVisibility:false,
+          cardNumber:1235467890,
+          cardNumberRules: [v => /^\d+$/.test(v) || 'Please make sure the card number is valid', v => (v && v.length == 16) || 'The card number must be 16 digits',],
+          cardHolder: '',
+          cardHolderRules: [v => !!v || 'Card holder details are required',v => (v && v.length <= 12) || 'The name is too long'],
+          cardCVV: '',
+          cardCVVRules: [v => !!v || 'CVV is required', v => /^\d+$/.test(v) || 'CVV should be a number', v => (v && v.length == 4 || v && v.length == 3) || 'Please enter a valid CVV'],
+          expiryDate:'',
+          selectedCountry: null,
+          countries: ['South Africa', 'Namibia', 'Lesotho'],
+          selectCountryRules: [v => !!v || 'A country is required'],
+        }
+    },
     methods: {
       submit() {
         if(!this.$refs.frmCardDetails.validate()) return;
-        console.log("cardNumber"+this.cardNumber);
-        console.log("cardHolder"+this.cardHolder);
-        console.log("cardCVV"+this.cardCVV);
-        console.log("expiryDate"+this.expiryDate);
+        let capturedCardDetail={
+          cardNumber:this.cardNumber,
+          cardHolder:this.cardHolder,
+          cardCVV:this.cardCVV,
+          expiryDate:this.expiryDate,
+          selectedCountry: this.selectedCountry
+        };
+        this.$emit('capturedCardDetails',capturedCardDetail);
       },
       cancel() {
         this.$refs.frmCardDetails.reset()
