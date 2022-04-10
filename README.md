@@ -1,6 +1,11 @@
-# card-details
-## Project setup
+# Card Details Capture
+A Front-end Application used for capturing card information
 
+## Technologies Used
+* Vue.js
+* Vuetify
+
+## Project setup
 ```
 npm install
 ```
@@ -10,12 +15,8 @@ npm install
 npm run serve
 ```
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
 
-### Lints and fixes files
-```
-npm run lint
-```
+## License
+[MIT](https://choosealicense.com/licenses/mit/)
