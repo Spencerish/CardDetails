@@ -1,11 +1,12 @@
 <template>
   <v-app>
     <v-main>
-      <v-btn @click="formStateHandler">
-         {{buttonText}} 
-      </v-btn>
+      <v-card>
+        <v-tabs dark>
+          <v-tab  @click="formStateHandler">{{buttonText}} </v-tab>
+        </v-tabs>
+      </v-card>
       <v-row v-if="state.cardView">
-      
         <v-col class="mx-auto">
             <CardDetailsCreate
               v-on:capturedCardDetails="addToallCapturedCardDetails"

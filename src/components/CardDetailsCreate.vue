@@ -67,6 +67,7 @@
             <v-date-picker
               v-model="expiryDate"
               type="month"
+              :min="today"
               no-title
               scrollable
             >
@@ -97,7 +98,7 @@
         <v-btn
           color="error"
           class="mr-4"
-          @click="cancel"  
+          @click="clearFields"  
         >
           Clear
         </v-btn>
@@ -135,7 +136,11 @@ export default {
   computed: {
     countries(){
       return this.allCountries
-    }
+    },
+    today(){
+      let date = new Date();
+      return date.getFullYear() + "-" + (date.getMonth() + 1);
+    }    
   },
   methods: {
     submit() {
@@ -148,8 +153,9 @@ export default {
         selectedCountry: this.selectedCountry
       };
       this.$emit('capturedCardDetails',capturedCardDetail);
+      this.clearFields();
     },
-    cancel() {
+    clearFields() {
       this.$refs.frmCardDetails.reset()
     },
     closeMenu(){

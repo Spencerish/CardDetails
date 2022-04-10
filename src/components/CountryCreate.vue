@@ -70,9 +70,6 @@ name: 'CountryCreate',
       };
       this.$emit('capturedCountryDetails',capturedCountry);
     },
-    cancel() {
-      this.$refs.frmCardDetails.reset()
-    },
     closeMenu(){
       this.datePickerMenuVisibility = false
     },
