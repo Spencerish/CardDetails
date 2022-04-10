@@ -18,7 +18,7 @@
       </v-row>
       <v-row v-if="state.countryView">
         <v-col>
-        <CountryCreate v-on:capturedCountryDetails="addToallCapturedCountries"/>
+          <CountryCreate v-on:capturedCountryDetails="addToallCapturedCountries"/>
         </v-col>
         <v-col>
           <CountryView v-bind:capturedCountryDetails="allCapturedCountries"/>
@@ -53,17 +53,34 @@ export default {
   methods: {
     addToallCapturedCardDetails(card){
       if(this.duplicateCheck(card)){
-
+        alert("Duplicate Card Number");
+      }else{
+        this.allCapturedCardDetails.push(card);
       }
-      this.allCapturedCardDetails.push(card)
     },
     addToallCapturedCountries(country){
+      if(this.duplicateBannedCountryCheck(country)){
+        alert("Country has already been banned");
+      }else{
       this.allCapturedCountries.push(country)
+      }      
     },
-    validateCardDetails(card){
-      
-
+    duplicateCardCheck(card){
+      for (let index = 0; index < this.allCapturedCardDetails.length; index++) {
+        if(card.cardNumber == this.allCapturedCardDetails[index].cardNumber){
+          return true;
+        } 
+      }
+      return false;      
     },
+    duplicateBannedCountryCheck(country){
+      for (let index = 0; index < this.allCapturedCountries.length; index++) {
+        if(country.countryName == this.allCapturedCountries[index].countryName){
+          return true;
+        } 
+      }
+      return false;      
+    },    
     formStateHandler(){
       this.state.countryView = !this.state.countryView;
       this.state.cardView = !this.state.cardView;

@@ -6,11 +6,10 @@
         <v-divider class="mx-4"></v-divider>
         <v-card-text>
           <v-form
-            ref="frmCardDetails"
+            ref="frmCountryDetails"
             v-model="valid"
             lazy-validation
           >      
-
         <v-select
           v-model="selectedCountry"
           :items="countries"
@@ -20,19 +19,18 @@
         ></v-select>
 
         <v-checkbox
-        v-model="validStatus"
+          v-model="validStatus"
           input-value="true"
           value
           label="Ban"
           disabled
         >
         </v-checkbox>
-
             <v-btn
-            :disabled="!valid"
-            color="success"
-            class="mr-4"
-            @click="submit"
+              :disabled="!valid"
+              color="success"
+              class="mr-4"
+              @click="submit"
             >
             Submit
             </v-btn>
@@ -44,35 +42,35 @@
 </template>
 
 <script>
-  export default {
-    name: 'CountryCreate',
-    data() {
-        return {
-          valid: true,
-          validStatus:true,
-          selectedCountry: null,
-          countries: ['South Africa', 'Namibia', 'Lesotho'],
-          selectCountryRules: [v => !!v || 'A country is required'],
-        }
+export default {
+name: 'CountryCreate',
+  data() {
+    return {
+      valid: true,
+      validStatus:true,
+      selectedCountry: null,
+      countries: ['South Africa', 'Namibia', 'Lesotho'],
+      selectCountryRules: [v => !!v || 'A country is required'],
+    }
+  },
+  methods: {
+    submit() {
+      if(!this.$refs.frmCountryDetails.validate()) return;
+      let capturedCountry = {
+        validStatus: this.validStatus,
+        countryName: this.selectedCountry
+      };
+      this.$emit('capturedCountryDetails',capturedCountry);
     },
-    methods: {
-      submit() {
-        if(!this.$refs.frmCardDetails.validate()) return;
-        let capturedCountry = {
-          validStatus: this.validStatus,
-          countryName: this.selectedCountry
-        };
-        this.$emit('capturedCountryDetails',capturedCountry);
-      },
-      cancel() {
-        this.$refs.frmCardDetails.reset()
-      },
-      closeMenu(){
-        this.datePickerMenuVisibility = false
-      },
-      selectDate(){
-        this.$refs.menu.save(this.expiryDate)
-      }
-    },      
-  }
+    cancel() {
+      this.$refs.frmCardDetails.reset()
+    },
+    closeMenu(){
+      this.datePickerMenuVisibility = false
+    },
+    selectDate(){
+      this.$refs.menu.save(this.expiryDate)
+    }
+  },      
+}
 </script>

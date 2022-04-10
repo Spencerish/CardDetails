@@ -107,46 +107,46 @@
 </template>
 
 <script>
-  export default {
-    name: 'CardDetailsCreate',
-    data() {
-        return {
-          on:false,
-          valid: true,
-          datePickerMenuVisibility:false,
-          cardNumber:null,
-          cardNumberRules: [v => /^\d+$/.test(v) || 'Please make sure the card number is valid', v => (v && v.length == 16) || 'The card number must be 16 digits',],
-          cardHolder: '',
-          cardHolderRules: [v => !!v || 'Card holder details are required',v => (v && v.length <= 12) || 'The name is too long'],
-          cardCVV: '',
-          cardCVVRules: [v => !!v || 'CVV is required', v => /^\d+$/.test(v) || 'CVV should be a number', v => (v && v.length == 4 || v && v.length == 3) || 'Please enter a valid CVV'],
-          expiryDate:'',
-          selectedCountry: null,
-          countries: ['South Africa', 'Namibia', 'Lesotho'],
-          selectCountryRules: [v => !!v || 'A country is required'],
-        }
+export default {
+  name: 'CardDetailsCreate',
+  data() {
+    return {
+      on:false,
+      valid: true,
+      datePickerMenuVisibility:false,
+      cardNumber:null,
+      cardNumberRules: [v => /^\d+$/.test(v) || 'Please make sure the card number is valid', v => (v && v.length == 16) || 'The card number must be 16 digits',],
+      cardHolder: '',
+      cardHolderRules: [v => !!v || 'Card holder details are required',v => (v && v.length <= 12) || 'The name is too long'],
+      cardCVV: '',
+      cardCVVRules: [v => !!v || 'CVV is required', v => /^\d+$/.test(v) || 'CVV should be a number', v => (v && v.length == 4 || v && v.length == 3) || 'Please enter a valid CVV'],
+      expiryDate:'',
+      selectedCountry: null,
+      countries: ['South Africa', 'Namibia', 'Lesotho'],
+      selectCountryRules: [v => !!v || 'A country is required']
+    }
+  },
+  methods: {
+    submit() {
+      if(!this.$refs.frmCardDetails.validate()) return;
+      let capturedCardDetail={
+        cardNumber:this.cNumber,
+        cardHolder:this.cardHolder,
+        cardCVV:this.cardCVV,
+        expiryDate:this.expiryDate,
+        selectedCountry: this.selectedCountry
+      };
+      this.$emit('capturedCardDetails',capturedCardDetail);
     },
-    methods: {
-      submit() {
-        if(!this.$refs.frmCardDetails.validate()) return;
-        let capturedCardDetail={
-          cardNumber:this.cardNumber,
-          cardHolder:this.cardHolder,
-          cardCVV:this.cardCVV,
-          expiryDate:this.expiryDate,
-          selectedCountry: this.selectedCountry
-        };
-        this.$emit('capturedCardDetails',capturedCardDetail);
-      },
-      cancel() {
-        this.$refs.frmCardDetails.reset()
-      },
-      closeMenu(){
-        this.datePickerMenuVisibility = false
-      },
-      selectDate(){
-        this.$refs.menu.save(this.expiryDate)
-      }
-    },      
-  }
+    cancel() {
+      this.$refs.frmCardDetails.reset()
+    },
+    closeMenu(){
+      this.datePickerMenuVisibility = false
+    },
+    selectDate(){
+      this.$refs.menu.save(this.expiryDate)
+    }
+  },      
+}
 </script>
