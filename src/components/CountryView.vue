@@ -4,7 +4,7 @@
       <v-card class="mx-auto my-12">    
         <v-data-table
         :headers="headers"
-        :items="cardDetails"
+        :items="countryDetails"
         ></v-data-table>
       </v-card>  
     </v-row>
@@ -13,29 +13,26 @@
 
 <script>
   export default {
-    name: 'CardDetailsView',
+    name: 'CountryView',
     data() {
         return {
             headers:[],
         }
     },
     computed:{
-        cardDetails(){
+        countryDetails(){
             this.createTableHeaders();
-            return this.capturedCardDetails
+            return this.capturedCountryDetails
         }
     },
     props:{
-        capturedCardDetails:Array        
+        capturedCountryDetails:Array
     },
     methods: {
         createTableHeaders(){
             this.headers = [
-                { text: 'Card Number', align: 'start', sortable: false,value: 'cardNumber'},
-                { text: 'Card Holder', value: 'cardHolder'},
-                { text: 'CVV', value: 'cardCVV'},
-                { text: 'Expiry Date', value: 'expiryDate'},
-                { text: 'Country', value: 'selectedCountry'}];
+                { text: 'Name', value: 'countryName'},
+                { text: 'Valid Status', value: 'validStatus'}]
         },
         showData(){
         },

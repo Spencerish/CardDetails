@@ -17,7 +17,7 @@
             lazy-validation
           >      
             <v-text-field
-              :v-model="cardNumber"
+              v-model="cardNumber"
               :counter="16"
               :rules="cardNumberRules"
               label="Card Number"
@@ -114,7 +114,7 @@
           on:false,
           valid: true,
           datePickerMenuVisibility:false,
-          cardNumber:1235467890,
+          cardNumber:null,
           cardNumberRules: [v => /^\d+$/.test(v) || 'Please make sure the card number is valid', v => (v && v.length == 16) || 'The card number must be 16 digits',],
           cardHolder: '',
           cardHolderRules: [v => !!v || 'Card holder details are required',v => (v && v.length <= 12) || 'The name is too long'],
